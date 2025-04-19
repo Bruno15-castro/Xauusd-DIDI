@@ -183,6 +183,7 @@ def calculate_bollinger_bands(data, period=20, std_dev=2):
     return data
 
 def detect_needle(data, index):
+def detect_needle(data, index):
     """
     Detecta uma "agulhada" no Didi Index.
     
@@ -197,21 +198,12 @@ def detect_needle(data, index):
         # Verifica se as três médias estão dentro do corpo do candle
         candle_open = data['Open'].iloc[index]
         candle_close = data['Close'].iloc[index]
-        
-        # Verifica se os valores são válidos (não são NaN)
-        if pd.isna(candle_open) or pd.isna(candle_close):
-            return False, None
-            
         candle_min = min(candle_open, candle_close)
         candle_max = max(candle_open, candle_close)
         
         sma3 = data['SMA3'].iloc[index]
         sma8 = data['SMA8'].iloc[index]
         sma20 = data['SMA20'].iloc[index]
-        
-        # Verifica se as médias móveis são válidas
-        if pd.isna(sma3) or pd.isna(sma8) or pd.isna(sma20):
-            return False, None
         
         # Verifica se todas as médias estão dentro do corpo do candle
         if (candle_min <= sma3 <= candle_max and
